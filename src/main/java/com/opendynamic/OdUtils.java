@@ -105,11 +105,11 @@ public class OdUtils {
     /**
      * 汉语中数字大写
      */
-    private static final String[] CN_UPPER_NUMBER = { "零", "壹", "贰", "叁", "肆", "伍", "陆", "柒", "捌", "玖" };
+    private static final String[] CN_UPPER_NUMBER = {"零", "壹", "贰", "叁", "肆", "伍", "陆", "柒", "捌", "玖"};
     /**
      * 汉语中货币单位大写，这样的设计类似于占位符
      */
-    private static final String[] CN_UPPER_MONETARY_UNIT = { "分", "角", "元", "拾", "佰", "仟", "万", "拾", "佰", "仟", "亿", "拾", "佰", "仟", "兆", "拾", "佰", "仟" };
+    private static final String[] CN_UPPER_MONETARY_UNIT = {"分", "角", "元", "拾", "佰", "仟", "万", "拾", "佰", "仟", "亿", "拾", "佰", "仟", "兆", "拾", "佰", "仟"};
     /**
      * 特殊字符：整
      */
@@ -128,10 +128,9 @@ public class OdUtils {
     private static final String CN_ZEOR_FULL = "零元" + CN_FULL;
 
     /**
-     * 把输入的金额转换为汉语中人民币的大写
-     * 
-     * @param numberOfMoney
-     *        输入的金额
+     * 把输入的金额转换为汉语中人民币的大写。
+     *
+     * @param numberOfMoney 输入的金额
      * @return 对应的汉语大写
      */
     public static String number2CNMonetaryUnit(BigDecimal numberOfMoney) {
@@ -179,8 +178,7 @@ public class OdUtils {
                 stringBuilder.insert(0, CN_UPPER_NUMBER[numUnit]);
                 getZero = false;
                 zeroSize = 0;
-            }
-            else {
+            } else {
                 ++zeroSize;
                 if (!(getZero)) {
                     stringBuilder.insert(0, CN_UPPER_NUMBER[numUnit]);
@@ -189,11 +187,9 @@ public class OdUtils {
                     if (number > 0) {
                         stringBuilder.insert(0, CN_UPPER_MONETARY_UNIT[numIndex]);
                     }
+                } else if (((numIndex - 2) % 4 == 0) && (number % 1000 > 0)) {
+                    stringBuilder.insert(0, CN_UPPER_MONETARY_UNIT[numIndex]);
                 }
-                else
-                    if (((numIndex - 2) % 4 == 0) && (number % 1000 > 0)) {
-                        stringBuilder.insert(0, CN_UPPER_MONETARY_UNIT[numIndex]);
-                    }
                 getZero = true;
             }
             // 让number每次都去掉最后一个数
@@ -212,19 +208,19 @@ public class OdUtils {
     }
 
     /**
-     * 获取UUID
-     * 
-     * @return
+     * 获取UUID。
+     *
+     * @return UUID
      */
     public static String getUuid() {
         return UUID.randomUUID().toString().replaceAll("-", "");
     }
 
     /**
-     * 获取MD5加密结果
-     * 
-     * @param string
-     * @return
+     * 获取MD5计算结果。
+     *
+     * @param string 要计算MD5的字符串
+     * @return MD5值
      */
     public static String getMd5(String string) {
         try {
@@ -245,17 +241,16 @@ public class OdUtils {
             }
 
             return stringBuilder.toString();
-        }
-        catch (NoSuchAlgorithmException e) {
+        } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         }
     }
 
     /**
-     * 获取MD5加密结果
-     * 
-     * @param inputStream
-     * @return
+     * 获取MD5计算结果。
+     *
+     * @param inputStream 要计算MD5的字节流
+     * @return MD5值
      */
     public static String getMd5(InputStream inputStream) {
         try {
@@ -281,18 +276,16 @@ public class OdUtils {
             }
 
             return stringBuilder.toString();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
     /**
-     * 获取文件名称
-     * 
-     * @param filePath
-     *        文件路径
-     * @return
+     * 获取文件名称。
+     *
+     * @param filePath 文件路径
+     * @return 文件名称
      */
     public static String getFileName(String filePath) {
         String filePaths[] = filePath.split("[\\\\|/]");
@@ -300,10 +293,10 @@ public class OdUtils {
     }
 
     /**
-     * 转换字符串为日期，用于excel导入
-     * 
-     * @param value
-     * @return
+     * 转换字符串为日期，用于excel导入。
+     *
+     * @param value 日期字符串
+     * @return 日期
      */
     public static java.sql.Date parseSqlDate(String value) {
         if (StringUtils.isEmpty(value)) {
@@ -313,23 +306,21 @@ public class OdUtils {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         try {
             return new java.sql.Date(dateFormat.parse(value).getTime());
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             dateFormat = new SimpleDateFormat("yyyy/MM/dd");
             try {
                 return new java.sql.Date(dateFormat.parse(value).getTime());
-            }
-            catch (Exception ex) {
+            } catch (Exception ex) {
                 return null;
             }
         }
     }
 
     /**
-     * 转换字符串为浮点，用于excel导入
-     * 
-     * @param value
-     * @return
+     * 转换字符串为浮点，用于excel导入。
+     *
+     * @param value 要转换的字符串
+     * @return 浮点值
      */
     public static Double parseNumber(String value) {
         if (StringUtils.isEmpty(value)) {
@@ -339,18 +330,17 @@ public class OdUtils {
         DecimalFormat df = new DecimalFormat("#,###.0");
         try {
             return df.parse(value).doubleValue();
-        }
-        catch (java.text.ParseException e) {
+        } catch (java.text.ParseException e) {
             return null;
         }
     }
 
     /**
-     * 转换EXCEL为HTML
-     * 
-     * @param inputStream
-     * @return
-     * @throws Exception
+     * 转换EXCEL为HTML。
+     *
+     * @param inputStream excel文件流
+     * @return 转换的html
+     * @throws Exception 任何异常
      */
     public static String convertExcelToHtml(InputStream inputStream) throws Exception {
         String excelHtml = null;
@@ -371,9 +361,11 @@ public class OdUtils {
     }
 
     /**
-     * @功能描述 POI 读取 Excel 转 HTML 支持 2003xls 和 2007xlsx 版本 包含样式
-     * @author Devil
-     * @创建时间 2015/4/19 21:34
+     * POI 读取 Excel 转 HTML 支持 2003xls 和 2007xlsx 版本 包含样式。
+     *
+     * @param wb          workbook
+     * @param isWithStyle 是否需要样式
+     * @return 转换的html
      */
     private static String getExcelHtml(Workbook wb, boolean isWithStyle) {
         StringBuilder stringBuilder = new StringBuilder();
@@ -422,15 +414,12 @@ public class OdUtils {
                         int rowSpan = bottomeRow - rowNum + 1;
                         int colSpan = bottomeCol - colNum + 1;
                         stringBuilder.append("<td rowspan= '" + rowSpan + "' colspan= '" + colSpan + "' ");
+                    } else if (map[1].containsKey(rowNum + "," + colNum)) {
+                        map[1].remove(rowNum + "," + colNum);
+                        continue;
+                    } else {
+                        stringBuilder.append("<td ");
                     }
-                    else
-                        if (map[1].containsKey(rowNum + "," + colNum)) {
-                            map[1].remove(rowNum + "," + colNum);
-                            continue;
-                        }
-                        else {
-                            stringBuilder.append("<td ");
-                        }
 
                     // 判断是否需要样式
                     if (isWithStyle) {
@@ -443,8 +432,7 @@ public class OdUtils {
                     }
                     if ((stringValue == null || "".equals(stringValue.trim())) && !row.getZeroHeight()) {
                         stringBuilder.append(" &nbsp; ");
-                    }
-                    else {
+                    } else {
                         // 将ascii码为160的空格转换为html下的空格（&nbsp;）
                         stringBuilder.append(stringValue.replace(String.valueOf((char) 160), "&nbsp;"));
                     }
@@ -460,7 +448,7 @@ public class OdUtils {
         return stringBuilder.toString();
     }
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @SuppressWarnings({"rawtypes", "unchecked"})
     private static Map<String, String>[] getRowSpanColSpanMap(Sheet sheet) {
         Map<String, String> map0 = new HashMap<String, String>();
         Map<String, String> map1 = new HashMap<String, String>();
@@ -484,15 +472,15 @@ public class OdUtils {
             }
             map1.remove(topRow + "," + topCol);
         }
-        Map[] map = { map0, map1 };
+        Map[] map = {map0, map1};
         return map;
     }
 
     /**
-     * 获取表格单元格Cell内容
-     * 
-     * @param cell
-     * @return
+     * 获取表格单元格Cell内容。
+     *
+     * @param cell excel单元格
+     * @return 单元格值
      */
     private static String getCellValue(Cell cell) {
         String result = new String();
@@ -502,32 +490,28 @@ public class OdUtils {
                     SimpleDateFormat sdf = null;
                     if (cell.getCellStyle().getDataFormat() == HSSFDataFormat.getBuiltinFormat("h:mm")) {
                         sdf = new SimpleDateFormat("HH:mm");
-                    }
-                    else {// 日期
+                    } else {// 日期
                         sdf = new SimpleDateFormat("yyyy-MM-dd");
                     }
                     Date date = cell.getDateCellValue();
                     result = sdf.format(date);
+                } else if (cell.getCellStyle().getDataFormat() == 58) {
+                    // 处理自定义日期格式：m月d日(通过判断单元格的格式id解决，id的值是58)
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                    double value = cell.getNumericCellValue();
+                    Date date = org.apache.poi.ss.usermodel.DateUtil.getJavaDate(value);
+                    result = sdf.format(date);
+                } else {
+                    double value = cell.getNumericCellValue();
+                    CellStyle style = cell.getCellStyle();
+                    DecimalFormat format = new DecimalFormat();
+                    String temp = style.getDataFormatString();
+                    // 单元格设置成常规
+                    if (temp.equals("General")) {
+                        format.applyPattern("#");
+                    }
+                    result = format.format(value);
                 }
-                else
-                    if (cell.getCellStyle().getDataFormat() == 58) {
-                        // 处理自定义日期格式：m月d日(通过判断单元格的格式id解决，id的值是58)
-                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                        double value = cell.getNumericCellValue();
-                        Date date = org.apache.poi.ss.usermodel.DateUtil.getJavaDate(value);
-                        result = sdf.format(date);
-                    }
-                    else {
-                        double value = cell.getNumericCellValue();
-                        CellStyle style = cell.getCellStyle();
-                        DecimalFormat format = new DecimalFormat();
-                        String temp = style.getDataFormatString();
-                        // 单元格设置成常规
-                        if (temp.equals("General")) {
-                            format.applyPattern("#");
-                        }
-                        result = format.format(value);
-                    }
                 break;
             case Cell.CELL_TYPE_STRING:// String类型
                 result = cell.getRichStringCellValue().toString();
@@ -543,12 +527,13 @@ public class OdUtils {
     }
 
     /**
-     * 处理表格样式
-     * 
-     * @param wb
-     * @param sheet
-     * @param cell
-     * @param stringBuilder
+     * 处理表格样式.
+     *
+     * @param wb            workbook
+     * @param sheet         页
+     * @param cell          单元格
+     * @param stringBuilder 字符串构建
+     * @param hasPicture    是否包含图片
      */
     private static void dealExcelStyle(Workbook wb, Sheet sheet, Cell cell, StringBuilder stringBuilder, Boolean hasPicture) {
         boolean rowInvisible = sheet.getRow(cell.getRowIndex()).getZeroHeight();
@@ -593,50 +578,49 @@ public class OdUtils {
                     stringBuilder.append(getBorderStyle(2, cellStyle.getBorderBottom(), ((XSSFCellStyle) cellStyle).getBottomBorderXSSFColor()));
                     stringBuilder.append(getBorderStyle(3, cellStyle.getBorderLeft(), ((XSSFCellStyle) cellStyle).getLeftBorderXSSFColor()));
                 }
-            }
-            else
-                if (wb instanceof HSSFWorkbook) {
-                    HSSFFont hf = ((HSSFCellStyle) cellStyle).getFont(wb);
-                    short boldWeight = hf.getBoldweight();
-                    short fontColor = hf.getColor();
-                    stringBuilder.append("style='");
-                    HSSFPalette palette = ((HSSFWorkbook) wb).getCustomPalette(); // 类HSSFPalette用于求的颜色的国际标准形式
-                    HSSFColor hc = palette.getColor(fontColor);
-                    stringBuilder.append("font-weight:" + boldWeight + ";"); // 字体加粗
-                    stringBuilder.append("font-size: " + hf.getFontHeight() / 1.5 + "%;"); // 字体大小
-                    String fontColorStr = convertToStardColor(hc);
-                    if (fontColorStr != null && !"".equals(fontColorStr.trim())) {
-                        stringBuilder.append("color:" + fontColorStr + ";"); // 字体颜色
-                    }
-                    stringBuilder.append("width:" + columnWidth + "px;");
-                    stringBuilder.append("height:" + columnHeight + "px;");
-                    if (hasPicture) {
-                        stringBuilder.append("height:" + columnHeight + "px;position:relative;");
-                    }
-                    short bgColor = cellStyle.getFillForegroundColor();
-                    hc = palette.getColor(bgColor);
-                    String bgColorStr = convertToStardColor(hc);
-                    if (bgColorStr != null && !"".equals(bgColorStr.trim())) {
-                        stringBuilder.append("background-color:" + bgColorStr + ";"); // 背景颜色
-                    }
-                    if (!rowInvisible) {
-                        stringBuilder.append(getBorderStyle(palette, 0, cellStyle.getBorderTop(), cellStyle.getTopBorderColor()));
-                        stringBuilder.append(getBorderStyle(palette, 1, cellStyle.getBorderRight(), cellStyle.getRightBorderColor()));
-                        stringBuilder.append(getBorderStyle(palette, 3, cellStyle.getBorderLeft(), cellStyle.getLeftBorderColor()));
-                        stringBuilder.append(getBorderStyle(palette, 2, cellStyle.getBorderBottom(), cellStyle.getBottomBorderColor()));
-                    }
+            } else if (wb instanceof HSSFWorkbook) {
+                HSSFFont hf = ((HSSFCellStyle) cellStyle).getFont(wb);
+                short boldWeight = hf.getBoldweight();
+                short fontColor = hf.getColor();
+                stringBuilder.append("style='");
+                HSSFPalette palette = ((HSSFWorkbook) wb).getCustomPalette(); // 类HSSFPalette用于求的颜色的国际标准形式
+                HSSFColor hc = palette.getColor(fontColor);
+                stringBuilder.append("font-weight:" + boldWeight + ";"); // 字体加粗
+                stringBuilder.append("font-size: " + hf.getFontHeight() / 1.5 + "%;"); // 字体大小
+                String fontColorStr = convertToStardColor(hc);
+                if (fontColorStr != null && !"".equals(fontColorStr.trim())) {
+                    stringBuilder.append("color:" + fontColorStr + ";"); // 字体颜色
                 }
+                stringBuilder.append("width:" + columnWidth + "px;");
+                stringBuilder.append("height:" + columnHeight + "px;");
+                if (hasPicture) {
+                    stringBuilder.append("height:" + columnHeight + "px;position:relative;");
+                }
+                short bgColor = cellStyle.getFillForegroundColor();
+                hc = palette.getColor(bgColor);
+                String bgColorStr = convertToStardColor(hc);
+                if (bgColorStr != null && !"".equals(bgColorStr.trim())) {
+                    stringBuilder.append("background-color:" + bgColorStr + ";"); // 背景颜色
+                }
+                if (!rowInvisible) {
+                    stringBuilder.append(getBorderStyle(palette, 0, cellStyle.getBorderTop(), cellStyle.getTopBorderColor()));
+                    stringBuilder.append(getBorderStyle(palette, 1, cellStyle.getBorderRight(), cellStyle.getRightBorderColor()));
+                    stringBuilder.append(getBorderStyle(palette, 3, cellStyle.getBorderLeft(), cellStyle.getLeftBorderColor()));
+                    stringBuilder.append(getBorderStyle(palette, 2, cellStyle.getBorderBottom(), cellStyle.getBottomBorderColor()));
+                }
+            }
 
             stringBuilder.append("' ");
         }
     }
 
     /**
-     * 单元格内容的水平对齐方式
-     * 
-     * @param alignment
-     * @return
+     * 单元格内容的水平对齐方式。
+     *
+     * @param alignment 对齐方式
+     * @return 字符串
      */
+
     private static String convertAlignToHtml(short alignment) {
         String align = "left";
         switch (alignment) {
@@ -656,10 +640,10 @@ public class OdUtils {
     }
 
     /**
-     * 单元格中内容的垂直排列方式
-     * 
-     * @param verticalAlignment
-     * @return
+     * 单元格中内容的垂直排列方式。
+     *
+     * @param verticalAlignment 垂直对齐方式
+     * @return 字符串
      */
     private static String convertVerticalAlignToHtml(short verticalAlignment) {
         String valign = "middle";
@@ -701,8 +685,8 @@ public class OdUtils {
         return str;
     }
 
-    private static String[] bordesr = { "border-top:", "border-right:", "border-bottom:", "border-left:" };
-    private static String[] borderStyles = { "solid ", "solid ", "solid ", "solid ", "solid ", "solid ", "solid ", "solid ", "solid ", "solid", "solid", "solid", "solid", "solid" };
+    private static String[] bordesr = {"border-top:", "border-right:", "border-bottom:", "border-left:"};
+    private static String[] borderStyles = {"solid ", "solid ", "solid ", "solid ", "solid ", "solid ", "solid ", "solid ", "solid ", "solid", "solid", "solid", "solid", "solid"};
 
     private static String getBorderStyle(HSSFPalette palette, int b, short s, short t) {
         if (s == 0) {
@@ -729,33 +713,27 @@ public class OdUtils {
     }
 
     /**
-     * 获取Excel图片公共方法
-     * 
-     * @param sheet
-     *        当前sheet对象
-     * @param workbook
-     *        工作簿对象
-     * @return Map key:图片单元格索引（1,1）String，value:图片流Picture
+     * 获取Excel图片公共方法。
+     *
+     * @param sheet    当前sheet对象
+     * @param workbook 工作簿对象
+     * @return map key:图片单元格索引（1,1）String，value:图片流Picture
      */
     public static Map<String, List<Picture>> getSheetPictrues(Sheet sheet, Workbook workbook) {
         if (workbook instanceof XSSFWorkbook) {
             return getSheetPictureMap2007((XSSFSheet) sheet);
+        } else if (workbook instanceof HSSFWorkbook) {
+            return getSheetPictrues2003((HSSFSheet) sheet);
+        } else {
+            return null;
         }
-        else
-            if (workbook instanceof HSSFWorkbook) {
-                return getSheetPictrues2003((HSSFSheet) sheet);
-            }
-            else {
-                return null;
-            }
     }
 
     /**
-     * 获取Excel2007图片
-     * 
-     * @param sheet
-     *        当前sheet对象
-     * @return Map key:图片单元格索引（1,1）String，value:图片流Picture
+     * 获取Excel2007图片。
+     *
+     * @param sheet 当前sheet对象
+     * @return map key:图片单元格索引（1,1）String，value:图片流Picture
      */
     private static Map<String, List<Picture>> getSheetPictureMap2007(XSSFSheet sheet) {
         Map<String, List<Picture>> sheetPictureMap = new HashMap<String, List<Picture>>();
@@ -783,11 +761,10 @@ public class OdUtils {
     }
 
     /**
-     * 获取Excel2003图片
-     * 
-     * @param sheet
-     *        当前sheet对象
-     * @return Map key:图片单元格索引（1,1）String，value:图片流Picture
+     * 获取Excel2003图片.
+     *
+     * @param sheet 当前sheet对象
+     * @return map key:图片单元格索引（1,1）String，value:图片流Picture
      */
     private static Map<String, List<Picture>> getSheetPictrues2003(HSSFSheet sheet) {
         Map<String, List<Picture>> sheetPictureMap = new HashMap<String, List<Picture>>();
@@ -819,11 +796,11 @@ public class OdUtils {
     }
 
     /**
-     * Excel添加sheet保护
-     * 
-     * @param inputStream
-     * @return
-     * @throws Exception
+     * Excel添加sheet保护.
+     *
+     * @param inputStream excel文件流
+     * @return 保护后的excel文件流
+     * @throws Exception 异常
      */
     public static InputStream protect(InputStream inputStream) throws Exception {
         Workbook wb = WorkbookFactory.create(inputStream);
@@ -840,11 +817,14 @@ public class OdUtils {
     }
 
     /**
-     * 给Excel中印章图片添加证书
-     * 
-     * @param excelInputStream
-     * @return
-     * @throws Exception
+     * 给Excel中印章图片添加证书.
+     *
+     * @param excelInputStream excel文件流
+     * @param certFile         证书文件
+     * @param certAlias        证书用户名
+     * @param certPassword     密码
+     * @return 签名后的excel文件流
+     * @throws Exception 异常
      */
     public static InputStream sign(InputStream excelInputStream, File certFile, String certAlias, String certPassword) throws Exception {
         char[] password = certPassword.toCharArray();
@@ -876,12 +856,18 @@ public class OdUtils {
         return new ByteArrayInputStream(baos.toByteArray());
     }
 
+    /**
+     * 图片转字节数组
+     *
+     * @param bufferedImage 图片
+     * @param imageFormat   图片格式
+     * @return 字节数组
+     */
     public static byte[] bufferedImageToBytes(BufferedImage bufferedImage, String imageFormat) {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         try {
             ImageIO.write(bufferedImage, imageFormat, byteArrayOutputStream);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
         return byteArrayOutputStream.toByteArray();
@@ -889,10 +875,10 @@ public class OdUtils {
 
     /**
      * 流转字符串
-     * 
-     * @param inputStream
-     * @return
-     * @throws Exception
+     *
+     * @param inputStream 流
+     * @return 字符串
+     * @throws Exception 异常
      */
     public static String inputStreamToString(InputStream inputStream) throws Exception {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -907,10 +893,10 @@ public class OdUtils {
 
     /**
      * 流转字节数组
-     * 
-     * @param inputStream
-     * @return
-     * @throws Exception
+     *
+     * @param inputStream 流
+     * @return 字节数组
+     * @throws Exception 异常
      */
     public static byte[] inputStreamToBytes(InputStream inputStream) throws Exception {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -924,12 +910,12 @@ public class OdUtils {
     }
 
     /**
-     * 从二维列表中取一列数据
-     * 
-     * @param dataList
-     * @param key
-     * @return
-     * @throws Exception
+     * 从二维数据列表中取一维数据
+     *
+     * @param dataList     二维数据列表
+     * @param key          维度key
+     * @param requiredType 维度数值类型
+     * @return 一维数据
      */
     @SuppressWarnings("unchecked")
     public static <T> List<T> collect(List<Map<String, Object>> dataList, String key, Class<T> requiredType) {
@@ -942,12 +928,12 @@ public class OdUtils {
     }
 
     /**
-     * 从二维列表中取一列数据
-     * 
-     * @param beanList
-     * @param key
-     * @return
-     * @throws Exception
+     * 从二维数据列表中取一维数据
+     *
+     * @param beanList     二维数据列表,bean列表
+     * @param key          维度key
+     * @param requiredType 维度数值类型
+     * @return 一维数据
      */
     @SuppressWarnings("unchecked")
     public static <T> List<T> collectFromBean(List<?> beanList, String key, Class<T> requiredType) {
@@ -955,8 +941,7 @@ public class OdUtils {
         for (int i = 0; i < beanList.size(); i++) {
             try {
                 result.add((T) BeanUtils.getProperty(beanList.get(i), key));
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         }
@@ -965,12 +950,12 @@ public class OdUtils {
     }
 
     /**
-     * 获取指定字段为指定值的一行数据
-     * 
-     * @param data
-     * @param key
-     * @param value
-     * @return
+     * 获取指定字段为指定值的一维数据
+     *
+     * @param data  二维数据
+     * @param key   key
+     * @param value 数值
+     * @return 一维数据
      */
     public static Map<String, Object> loadByKey(List<Map<String, Object>> data, String key, Object value) {
         for (Map<String, Object> record : data) {
@@ -984,19 +969,15 @@ public class OdUtils {
 
     /**
      * 单元格内写字，居中，自动换行
-     * 
-     * @param g2d
-     * @param text
-     * @param x
-     *        单元格坐标
-     * @param y
-     *        单元格坐标
-     * @param width
-     *        单元格宽度
-     * @param height
-     *        单元格高度
-     * @param font
-     *        字体
+     *
+     * @param g2d    画布
+     * @param text   文字
+     * @param x      单元格坐标
+     * @param y      单元格坐标
+     * @param width  单元格宽度
+     * @param height 单元格高度
+     * @param valign 垂直居中
+     * @param font   字体
      */
     public static void drawStringInCell(Graphics2D g2d, String text, int x, int y, int width, int height, String valign, Font font) {
         if (StringUtils.isEmpty(text)) {
@@ -1017,13 +998,11 @@ public class OdUtils {
             for (int i = 0; i < lineNum; i++) {
                 if (i < lineNum - 1) {
                     texts[i] = text.substring(length * i, length * (i + 1));
-                }
-                else {
+                } else {
                     texts[i] = text.substring(length * i);
                 }
             }
-        }
-        else {
+        } else {
             texts = new String[1];
             texts[0] = text;
         }
@@ -1034,26 +1013,23 @@ public class OdUtils {
             textX = (width - fontMetrics.stringWidth(texts[i])) / 2 + x;// 横向居中
             if (valign.equals("top")) {
                 textY = textHeight * i + y + fontMetrics.getAscent();// 纵向居中
+            } else if (valign.equals("bottom")) {
+                textY = (height - textHeight * lineNum) + textHeight * i + y + fontMetrics.getAscent();// 纵向居中
+            } else {
+                textY = (height - textHeight * lineNum) / 2 + textHeight * i + y + fontMetrics.getAscent();// 纵向居中
             }
-            else
-                if (valign.equals("bottom")) {
-                    textY = (height - textHeight * lineNum) + textHeight * i + y + fontMetrics.getAscent();// 纵向居中
-                }
-                else {
-                    textY = (height - textHeight * lineNum) / 2 + textHeight * i + y + fontMetrics.getAscent();// 纵向居中
-                }
             g2d.drawString(texts[i], textX, textY);
         }
     }
 
     /**
      * 为图片添加阴影
-     * 
-     * @param bufferedImage
-     * @param size
-     * @param color
-     * @param alpha
-     * @return
+     *
+     * @param bufferedImage 图片
+     * @param size          阴影宽度
+     * @param color         颜色
+     * @param alpha         透明度
+     * @return 添加阴影后的图片
      */
     public static BufferedImage applyShadow(BufferedImage bufferedImage, int size, Color color, float alpha) {
         BufferedImage result = createCompatibleImage(bufferedImage, bufferedImage.getWidth() + (size * 2), bufferedImage.getHeight() + (size * 2));
@@ -1132,9 +1108,9 @@ public class OdUtils {
 
     /**
      * 分词
-     * 
-     * @param word
-     * @return
+     *
+     * @param word 句子
+     * @return 分割后的单词
      */
     public static Set<String> splitWord(String word) {
         Set<String> wordSet = new HashSet<>();
@@ -1151,8 +1127,7 @@ public class OdUtils {
             while (tokenStream.incrementToken()) { // 遍历分词数据
                 wordSet.add(term.toString());
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         reader.close();
@@ -1163,9 +1138,9 @@ public class OdUtils {
 
     /**
      * 深度克隆
-     * 
-     * @param object
-     * @return
+     *
+     * @param object 要克隆的对象
+     * @return 克隆对象
      */
     public static Object deepClone(Object object) {
         try {
@@ -1177,17 +1152,16 @@ public class OdUtils {
 
             ObjectInputStream objectInputStream = new ObjectInputStream(new ByteArrayInputStream(byteArrayOutputStream.toByteArray()));
             return (Serializable) objectInputStream.readObject();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             return null;
         }
     }
 
     /**
      * 将字节数组转化为对象
-     * 
-     * @param objectByteArray
-     * @return
+     *
+     * @param objectByteArray 字节数组
+     * @return 对象
      */
     public static Object deserialize(byte[] objectByteArray) {
         ObjectInputStream objectInputStream;
@@ -1196,17 +1170,16 @@ public class OdUtils {
             Object object = objectInputStream.readObject();
             objectInputStream.close();
             return object;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
     /**
      * base64字符串转图片
-     * 
-     * @param base64String
-     * @return
+     *
+     * @param base64String base64字符串
+     * @return 图片
      */
     public static byte[] base64StringToImage(String base64String) {
         return new Base64().decode(base64String.getBytes());
@@ -1214,9 +1187,9 @@ public class OdUtils {
 
     /**
      * 获取HTTP请求的IP
-     * 
-     * @param request
-     * @return
+     *
+     * @param request request
+     * @return IP
      */
     public static String getIpAddress(HttpServletRequest request) {
         String ipAddress = request.getHeader("X-FORWARDED-FOR");
@@ -1241,9 +1214,9 @@ public class OdUtils {
 
     /**
      * 获取HTTP请求的URL
-     * 
-     * @param request
-     * @return
+     *
+     * @param request request
+     * @return URL
      */
     public static String getUrl(HttpServletRequest request) {
         StringBuilder url = new StringBuilder(200);
@@ -1257,9 +1230,9 @@ public class OdUtils {
 
     /**
      * 获取HTTP请求的入参
-     * 
-     * @param request
-     * @return
+     *
+     * @param request request
+     * @return 入参
      */
     public static String getParameterMap(HttpServletRequest request) {
         StringBuilder parameterMapStringBuilder = new StringBuilder(1000);
@@ -1274,14 +1247,11 @@ public class OdUtils {
     /**
      * 设置注解中的字段值
      *
-     * @param annotation
-     *        要修改的注解实例
-     * @param fieldName
-     *        要修改的注解字段名
-     * @param value
-     *        要设置的值
+     * @param annotation 要修改的注解实例
+     * @param fieldName  要修改的注解字段名
+     * @param value      要设置的值
      */
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @SuppressWarnings({"unchecked", "rawtypes"})
     public static void setAnnotationValue(Annotation annotation, String fieldName, Object value) {
         try {
             InvocationHandler invocationHandler = Proxy.getInvocationHandler(annotation);
@@ -1289,20 +1259,17 @@ public class OdUtils {
             field.setAccessible(true);
             Map fieldMap = (Map) field.get(invocationHandler);
             fieldMap.put(fieldName, value);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
     /**
-     * 分割字符串成List
-     * 
-     * @param string
-     *        字符串
-     * @param separator
-     *        分隔符
-     * @return List
+     * 分割字符串成list
+     *
+     * @param string    字符串
+     * @param separator 分隔符
+     * @return list
      */
     public static List<String> separate(String string, String separator) {
         List<String> result = new ArrayList<>();
@@ -1319,12 +1286,11 @@ public class OdUtils {
 
     /**
      * 调用对方接口方法
-     * 
-     * @param requestUrl
-     *        对方或第三方提供的路径
-     * @param requestBody
-     *        向对方或第三方发送的数据，大多数情况下给对方发送JSON数据让对方解析
-     * @throws Exception
+     *
+     * @param requestUrl  对方或第三方提供的路径
+     * @param requestBody 向对方或第三方发送的数据，大多数情况下给对方发送JSON数据让对方解析
+     * @return 调用请求结果
+     * @throws Exception 异常
      */
     public static String getHttpResponse(String requestUrl, String requestBody) throws Exception {
         String result = null;
@@ -1361,16 +1327,14 @@ public class OdUtils {
     }
 
     /**
-     * @param requestUrl
-     *        请求地址
-     * @param requestBody
-     *        发送内容
-     * @param certPassword
-     *        证书密码
-     * @param certFile
-     *        证书文件
-     * @return 返回数据
-     * @throws Exception
+     * 使用证书调用对方接口方法
+     *
+     * @param requestUrl   请求地址
+     * @param requestBody  发送内容
+     * @param certFile     证书文件
+     * @param certPassword 证书密码
+     * @return 调用请求结果
+     * @throws Exception 异常
      */
     public static String getHttpsResponse(String requestUrl, String requestBody, File certFile, String certPassword) throws Exception {
         String result = null;
@@ -1414,11 +1378,10 @@ public class OdUtils {
 
     /**
      * 加载证书
-     * 
-     * @param certFile
-     *        证书存放地址
-     * @param certPassword
-     *        证书密码
+     *
+     * @param certFile     证书存放地址
+     * @param certPassword 证书密码
+     * @return SSLSocketFactory
      */
     private static SSLSocketFactory initCert(File certFile, String certPassword) {
         InputStream inputStream = null;
@@ -1448,19 +1411,16 @@ public class OdUtils {
             };
 
             SSLContext sslContext = SSLContext.getInstance("TLS");
-            sslContext.init(keyManagerFactory.getKeyManagers(), new TrustManager[] { trustManager }, null); // 第一个参数是授权的密钥管理器，用来授权验证。TrustManager[]第二个是被授权的证书管理器，用来验证服务器端的证书。第三个参数是一个随机数值，可以填写null
+            sslContext.init(keyManagerFactory.getKeyManagers(), new TrustManager[]{trustManager}, null); // 第一个参数是授权的密钥管理器，用来授权验证。TrustManager[]第二个是被授权的证书管理器，用来验证服务器端的证书。第三个参数是一个随机数值，可以填写null
 
             return sslContext.getSocketFactory();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             throw new RuntimeException("errors.DigitalCertificateInitializationFailed");
-        }
-        finally {
+        } finally {
             if (inputStream != null) {
                 try {
                     inputStream.close();
-                }
-                catch (IOException ex) {
+                } catch (IOException ex) {
                     ex.printStackTrace();
                 }
             }
